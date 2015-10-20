@@ -117,7 +117,7 @@ EOT
 
         // Bundle oro autoloader
         $this->renderFile('bundle/Bundle.php.twig', $dir.'/'.$bundleName.'.php', $parameters);
-        $this->renderFile('bundle/bundles.yml.twig', $dir.'/Resources/oro/bundles.yml', $parameters);
+        $this->renderFile('bundle/bundles.yml.twig', $dir.'/Resources/config/oro/bundles.yml', $parameters);
         $this->renderFile('bundle/Extension.php.twig', $dir.'/DependencyInjection/'.$bundleName.'Extension.php', $parameters);
         $this->renderFile('bundle/Configuration.php.twig', $dir.'/DependencyInjection/Configuration.php', $parameters);
         $this->renderFile('bundle/services.yml.twig', $dir.'/Resources/config/services.yml', $parameters);
