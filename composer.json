@@ -1,0 +1,35 @@
+{
+  "name": "letsweb/oro-generator-bundle",
+  "description": "This bundle generates code for you in Oro envoronement",
+  "keywords": [],
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Geoffroy Cochard",
+      "email": "geoffroycochard@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/framework-bundle": "~2.6",
+    "sensio/generator-bundle": "~2.6",
+    "symfony/console": "~2.6",
+    "symfony/process": "~2.6",
+    "symfony/yaml": "~2.6"
+  },
+  "require-dev": {
+    "symfony/doctrine-bridge": "~2.2",
+    "doctrine/orm": "~2.2,>=2.2.3",
+    "twig/twig": "~1.18"
+  },
+  "autoload": {
+    "psr-0": { "Letsweb\\Bundle\\OroGeneratorBundle": "" }
+  },
+  "target-dir": "Letsweb/Bundle/OroGeneratorBundle",
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  }
+}

@@ -1,0 +1,2 @@
+bundles:
+    - { name: Letsweb\Bundle\OroGeneratorBundle\LetswebOroGeneratorBundle, priority: 0  }
