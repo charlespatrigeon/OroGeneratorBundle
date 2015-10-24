@@ -1,0 +1,15 @@
+{{ "{% extends 'OroUIBundle:actions:index.html.twig' %}" }}
+{{ "{% import 'OroUIBundle::macros.html.twig' as UI %}" }}
+{{ "{% set gridName = '" }}{{ entity|lower }}{{ "-grid' %}" }}
+{{ "{% set pageTitle = '" }}{{ entity }}{{ "s'|trans %}" }}
+
+{{ "{% block navButtons %}" }}
+    {{ "{% if resource_granted('"}}{{ vendor }}.{{ entity|lower }}{{ ".view') %}" }}
+        <div class="btn-group">
+            {{ "{{ UI.addButton({
+                'path': path('" }}{{ vendor }}.{{ entity|lower }}{{ ".index'),
+                'entity_label': '" }}{{ entity }}{{ "'|trans
+            }) }}"}}
+        </div>
+    {{ "{% endif %}" }}
+{{ "{% endblock %}" }}

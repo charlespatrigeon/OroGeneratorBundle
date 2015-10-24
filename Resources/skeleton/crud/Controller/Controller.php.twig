@@ -1,0 +1,92 @@
+<?php
+
+namespace {{ namespace }}\Controller;
+
+use {{ entityClass }};
+use Oro\Bundle\SecurityBundle\Annotation\Acl;
+use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+class {{ entity }}Controller extends Controller
+{
+
+    /**
+     * @param Request $request
+     * @Route("/create", name="{{ vendor }}.{{ entity|lower }}.create")
+     * @Template("{{ shortcutEntity }}:update.html.twig")
+     * @Acl(
+     *     id="{{ vendor }}.{{ entity|lower }}.create",
+     *     type="entity",
+     *     class="{{ shortcutEntity }}",
+     *     permission="CREATE"
+     * )
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function createAction(Request $request)
+    {
+        return $this->update(new {{ entity }}(), $request);
+    }
+
+    /**
+     * @param {{ entity }} ${{ entity|lower }}
+     * @param Request $request
+     * @Route("/update/{id}", name="{{ vendor }}.{{ entity|lower }}.update", requirements={"id":"\d+"}, defaults={"id":0})
+     * @Template()
+     * @Acl(
+     *     id="{{ vendor }}.{{ entity|lower }}.update",
+     *     type="entity",
+     *     class="{{ shortcutEntity }}",
+     *     permission="EDIT"
+     * )
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateAction({{ entity }} ${{ entity|lower }}, Request $request)
+    {
+        return $this->update(${{ entity|lower }}, $request);
+    }
+
+    private function update({{ entity }} ${{ entity|lower }}, Request $request)
+    {
+        $form = $this->get('form.factory')->create('{{ vendor }}_{{ entity|lower }}', ${{ entity|lower }});
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist(${{ entity|lower }});
+            $entityManager->flush();
+
+            return $this->get('oro_ui.router')->redirectAfterSave(
+                array(
+                    'route' => '{{ vendor }}.{{ entity|lower }}.update',
+                    'parameters' => array('id' => ${{ entity|lower }}->getId()),
+                ),
+                array('route' => '{{ vendor }}.{{ entity|lower }}.index'),
+                ${{ entity|lower }}
+            );
+        }
+
+        return array(
+            'entity' => ${{ entity|lower }},
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Route("/{id}", name="{{ vendor }}.{{ entity|lower }}.view", requirements={"id"="\d+"})
+     * @Template
+     * @Acl(
+     *     id="{{ vendor }}.{{ entity|lower }}.view",
+     *     type="entity",
+     *     class="{{ shortcutEntity }}",
+     *     permission="VIEW"
+     * )
+     */
+    public function viewAction({{ entity }} ${{ entity|lower }})
+    {
+        return array('entity' => ${{ entity|lower }});
+    }
+
+}
